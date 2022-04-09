@@ -1,0 +1,38 @@
+backend:
+  name: github
+  repo: allangrds/allan-ramos-blog
+  branch: master
+  site_domain: https://www.allanramos.com.br
+
+publish_mode: editorial_workflow
+media_folder: "static/assets/uploads"
+public_folder: "assets/uploads"
+
+collections:
+  - name: "posts" # Used in routes, e.g., /admin/collections/blog
+    label: "Posts" # Used in the UI
+    folder: "posts" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    fields: # The fields for each document, usually in front matter
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Subtitle", name: "subtitle", widget: "string" }
+      - {
+          label: "Description",
+          name: "description",
+          widget: "string",
+          required: false,
+        }
+      - {
+          label: "Date",
+          name: "date",
+          widget: "datetime",
+          format: "YYYY-MM-DD hh:mm:ss",
+        }
+      - {
+          label: "Category",
+          name: "category",
+          widget: "select",
+          options: ["front-end", "back-end"],
+        }
+      - { label: "Body", name: "body", widget: "markdown" }

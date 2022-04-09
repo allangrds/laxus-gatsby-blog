@@ -1,0 +1,57 @@
+---
+title: useEffect vs useLayoutEffect
+subtitle: Quando usar cada um?
+description: Ambas opções podem ser usadas para fazer a mesma coisa, mas eles têm casos de uso ligeiramente diferentes. Então, aqui estão algumas regras para você considerar ao decidir qual React Hook usar.
+hero_image: "/assets/uploads/cover/useeffect_vs_uselayouteffect.png"
+date: 2022-01-26 19:00:00
+author: Allan Ramos
+category: 'Front-end'
+series: ''
+tags: ['react']
+---
+
+Esse artigo é uma tradução do artigo original [useEffect vs useLayoutEffect](https://kentcdodds.com/blog/useeffect-vs-uselayouteffect) criado por [Kent C. Dodds](https://kentcdodds.com/blog/useeffect-vs-uselayouteffect).
+
+Ambas opções podem ser usadas para fazer a mesma coisa, mas elas tem casos de uso ligeiramente diferentes. Então, aqui estão algumas regras para você considerar ao decidir qual [React Hook](https://reactjs.org/docs/hooks-intro.html) usar.
+
+# useEffect
+
+99% das vezes é esse que você precisará usar. Quando seus hooks são estáveis e você refatora as suas class components para hooks, aos poucos você irá mudar códigos de `componentDidMount`, `componentDidUpdate` e `componentWillUnmount` para `useEffect`.
+
+O único problema dele é ser apenas executado após o React renderizar seu componente, garantindo que ele não bloqueie a renderização do navegador. Isso é diferente do comportamento de class components onde `componentDidMount` e `componentDidUpdate` rodam de forma síncrona após a renderização. É mais eficiente dessa maneira e na maioria das vezes é isso que você precisará.
+
+Entretanto, se o uso desse hook estiver mudando o DOM(via DOM node ref) **e** a mutação do DOM alterar a aparência do nó do DOM entre o momento que ele é renderizado e o momento que seu hook o altera, então você não deseja usar o `useEffect`. Você na verdade quer usar o `useLayoutEffect`. Caso contrário, o usuário poderá ver uma mudança rápida na interface quando suas mudanças do DOM forem realizadas. Essa é praticamente a única vez que você deseja evitar `useEffect` e usar `useLayoutEffect` em vez disso.
+
+# useLayoutEffect
+
+Executado de forma síncrona imediatamente após o React fazer todas as alterações no DOM. Pode ser útil se você precisar fazer medições DOM (como obter a posição de rolagem ou outros estilos para um elemento) e depois fazer alterações no DOM ou acionar uma nova renderização síncrona atualizando o estado.
+
+No que diz respeito ao momento, ele funciona da mesma forma que `componentDidMount` e `componentDidUpdate`. Seu código é executado imediamente após o DOM ser atualizado, mas antes que o navegador tenha a chance de "renderizar" essas alterações (o usuário não vê as atualizações até que o navegador tenha re-renderizado).
+
+# Resumo
+
+- `useLayoutEffect`: Se você precisar alterar o DOM e/ou precisar realizar medições.
+
+- `useEffect`: Se você não precisa interagir com o DOM ou suas alterações no DOM não são observáveis (sério, na maioria das vezes você deve usar isso).
+
+# Um caso diferente
+
+Um caso onde você possa querer usar `useLayoutEffect` ao invés de `useEffect` é quando você está atualizando um valor(como `ref`) e você quer ter certeza de que está atualizado antes que qualquer outro código seja executado. Exemplo:
+
+```jsx
+const ref = React.useRef()
+React.useEffect(() => {
+  ref.current = 'valor qualquer'
+})
+
+// depois, em outro hook ou algo do tipo
+React.useLayoutEffect(() => {
+  console.log(ref.current) // <-- isso aqui loga o valor antigo pois é executado primeiro!
+})
+```
+
+Em casos como esse, use `useLayoutEffect`.
+
+# Conclusão
+
+É tudo sobre padrões. O comportamento padrão é permitir que o navegador renderize novamente com base nas atualizações do DOM antes que o React execute seu código. Isso significa que seu código não bloqueará o navegador e o usuário verá as atualizações do DOM mais cedo. Portanto, fique com `useEffect` na maioria das vezes.

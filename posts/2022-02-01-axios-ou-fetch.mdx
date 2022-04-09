@@ -1,0 +1,343 @@
+---
+title: Axios ou fetch()
+subtitle: Qual você deveria usar?
+description:
+hero_image: "/assets/uploads/cover/axios_ou_fetch.webp"
+date: 2022-02-01 12:00:00
+author: Allan Ramos
+category: 'Front-end'
+series: ''
+tags: ['javascript']
+---
+
+Esse artigo é uma tradução livre de [Axios or fetch(): Which should you use?](https://blog.logrocket.com/axios-or-fetch-api/)por [Faraz Kelhini](https://blog.logrocket.com/author/farazkelhini/).
+
+Em minha recente postagem “[Como fazer requests como um profissional usando Axios](https://blog.logrocket.com/how-to-make-http-requests-like-a-pro-with-axios/#new_tab),” eu discuti os benefícios de usar essa biblioteca. Mesmo assim, é importante saber que nem sempre o Axios é a melhor solução, existindo melhores opções para fazer requisições(requests) HTTP.
+
+Sem questionar ou sequer titubear, alguns desenvolvedores preferem o Axios ao invés de APIs internas. Mas em sua maioria, superestimam a necessidade do uso dessa biblioteca. A API `fetch()` é perfeitamente capaz de reproduzir as principais funcionalidades do Axios, e tem a vantagem de estar presentes em todos os navegadores modernos.
+
+Nesse artigo, será feito o comparativo entre usar o `fetch()` e Axios, vendo como podem ser usados diferentes usos. Espero que, ao final do artigo, você possa ter uma compreensão melhor de ambas as APIs.
+
+# Syntax básica
+
+Antes de nos aprofundar em funcionalidades avançadas do Axios, vamos comparar sua syntax básica com o que é usado no `fetch()`. O exemplo a seguir mostra como fazer uma request POST usando Axios com cabeçalhos customizados(custom headers). O Axios converte automaticamente a resposta para JSON, para que você não precise fazer isso.
+
+```javascript
+// axios
+const options = {
+  url: 'http://localhost/test.htm',
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json;charset=UTF-8'
+  },
+  data: {
+    a: 10,
+    b: 20
+  }
+};
+axios(options)
+  .then(response => {
+    console.log(response.status);
+  });
+```
+
+Agora compare esse código com o que usaremos no `fetch()`, que produzirá o mesmo resultado:
+
+```javascript
+// fetch()
+
+const url = 'http://localhost/test.htm';
+const options = {
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json;charset=UTF-8'
+  },
+  body: JSON.stringify({
+    a: 10,
+    b: 20
+  })
+};
+
+fetch(url, options)
+  .then(response => {
+    console.log(response.status);
+  });
+```
+
+Perceba que:
+
+* Para enviar dados, o `fetch()` usa a propriedade “body”, enquanto o Axios faz uso da propriedade “data”.
+* Os dados enviados pelo `fetch()` devem estar stringuificados(stringified)
+* A URL é passada como argumento no `fetch()`. No Axios, entretanto, a URL faz parte do conjunto de valores enviados no objeto “options”.
+
+# Compatibilidade com versões anteriores
+
+Um dos grandes pontos de aderência ao Axios é seu suporte aos navegadores. Mesmo os antigos como IE11 pode rodá-lo sem problemas. O `fetch()`, por outro lado, apenas é suportado pelo Chrome 42+, Firefox 39+, Edge 14+, e Safari 10.1+ (você pode ver a tabela completa de suporte no site — [Can I use](https://caniuse.com/#search=Fetch)).
+
+Se a sua justificativa para usar o Axios for apenas sua compatabilidade, você realmente não precisa de uma biblioteca HTTP. Ao invés disso, use o `fetch()` com um polyfill como [esse](https://github.com/github/fetch) para implementar uma funcionalidade similar em navegadores que não suportam seu uso. Para fazer uso desse polyfill, faça sua instalação via npm através do comando:
+
+```
+npm install whatwg-fetch --save
+```
+
+Aí pra fazer uma request é só fazer assim:
+
+```javascript
+import 'whatwg-fetch'
+window.fetch(...)
+```
+
+Tenha em mente que você talvez precisará um polyfill para promise nesses navegadores antigos.
+
+# Timeout de resposta(Response timeout)
+
+A forma simples de colocar um timeout no Axios é uma das muitas razões dos desenvolvedores usá-lo ao invés do `fetch()`. No Axios, você pode usar a opção `timeout` no objeto de configuração para informar o tempo em milissegundos antes da requisição ser abortada. Exemplo:
+
+```javascript
+axios({
+  method: 'post',
+  url: '/login',
+  timeout: 4000, // 4 segundos timeout
+  data: {
+    firstName: 'David',
+    lastName: 'Pollock'
+  }
+})
+.then(response => {/* tratamento da resposta */})
+.catch(error => console.error('timeout excedido'))
+```
+
+`Fetch()` provê uma funcionalidade similar através da interface `AbortController`. Não é simples como no Axios, mas é possível:
+
+```javascript
+const controller = new AbortController();
+const options = {
+  method: 'POST',
+  signal: controller.signal,
+  body: JSON.stringify({
+    firstName: 'David',
+    lastName: 'Pollock'
+  })
+};
+const promise = fetch('/login', options);
+const timeoutId = setTimeout(() => controller.abort(), 4000);
+promise
+  .then(response => {/* tratamento da resposta */})
+  .catch(error => console.error('timeout excedido'));
+```
+
+Aqui nós criamos o `AbortController`, que nos permitirá abortar a requisição. A propriedade `signal` é apenas de leitura(read-only), provendo meios de se comunicar com uma request ou abortá-la. Se o servidor não responder nada em até 4 segundos, o `controller.abort()` será chamado, encerrando a operação.
+
+# Conversão em JSON automática
+
+Como foi dito anteriormente, o Axios stringuifica(stringifies) automaticamente os dados enviados nas requests(você também pode sobrescrever o compartamento padrão e criar um meio de transformar o dado). Quando usamos `fetch()` você precisa fazer isso manualmente. Veja:
+
+```javascript
+// axios
+axios.get('https://api.github.com/orgs/axios')
+  .then(response => {
+    console.log(response.data);
+  }, error => {
+    console.log(error);
+  });
+// fetch()
+fetch('https://api.github.com/orgs/axios')
+  .then(response => response.json())    // passo extra
+  .then(data => {
+    console.log(data)
+  })
+  .catch(error => console.error(error));
+```
+
+Essa conversão dos dados é uma funcionalidade bacana, mas novamente, não é nada que o `fetch()` não consiga fazer.
+
+# Interceptores HTTP(HTTP interceptors)
+
+Uma das principais funcionalidades do Axios é a habilidade de interceptar requisições(requests) HTTP. Esses interceptadores são úteis quando é preciso examinar ou alterar requisições HTTP, sendo ela da sua aplicação para o servidor e vice-versa(ex: log, autenticação, etc). Fazendo uso de um interceptador você não precisará escrever um código separado para cada requisição HTTP.
+
+Segue abaixo como declarar um interceptador usando o Axios:
+
+```javascript
+axios.interceptors.request.use(config => {
+  // loga(log) uma mensagem antes da requisição HTTP ser enviada
+  console.log('A requisição foi enviada');
+  return config;
+});
+// faz uma requisição GET
+axios.get('https://api.github.com/users/sideshowbarker')
+  .then(response => {
+    console.log(response.data);
+  });
+```
+
+No código acima, o método `axios.interceptors.request.use()` é usado para definir um código que será executado antes que a requisição HTTP seja enviada.
+
+O `fetch()` não possui nada desse tipo para fazermos essa interceptação, mas não é difícil de contarmos isso, para obtermos o mesmo efeito. Você pode sobrescrever o método global fetch, e definir seu próprio interceptador, como mostrado abaixo:
+
+```javascript
+fetch = (originalFetch => {
+  return (...arguments) => {
+    const result = originalFetch.apply(this, arguments);
+      return result.then(console.log('A requisição foi enviada'));
+  };
+})(fetch);
+fetch('https://api.github.com/orgs/axios')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data)
+  });
+```
+
+# Progresso de download
+
+Indicadores de progressão são bem úteis quando carregamos muitos assets, principalmente quando o usário não tem uma internet bacana. Anteriormente, os programadores Javascript faziam uso do callback `XMLHttpRequest.onprogress` para implementar esses indicadores de progresso.
+
+A [API do Fetch](http://XMLHttpRequest.onprogress) não tem uma método `onprogress` para tratar esse caso. Ao invés disso, provê uma instância de `ReadableStream` através do `body` no objeto da resposta.
+
+O exemplo seguinte demonstra o uso do `ReadableStream` para prover aos usuários um feedback imediato durando o download de uma imagem:
+
+```javascript
+// código original: https://github.com/AnthumChris/fetch-progress-indicators
+<div id="progress" src="">progress</div>
+<img id="img">
+<script>
+'use strict'
+const element = document.getElementById('progress');
+fetch('https://fetch-progress.anthum.com/30kbps/images/sunrise-baseline.jpg')
+  .then(response => {
+    if (!response.ok) {
+      throw Error(response.status+' '+response.statusText)
+    }
+    // tenha certeza que o ReadableStream é suportado
+    if (!response.body) {
+      throw Error('ReadableStream not yet supported in this browser.')
+    }
+    // armazene o tamanho da entity-body em bytes
+    const contentLength = response.headers.get('content-length');
+    // garanta que o contentLength está disponível
+    if (!contentLength) {
+      throw Error('Content-Length response header unavailable');
+    }
+    // converta o integer em um número de base 10
+    const total = parseInt(contentLength, 10);
+    let loaded = 0;
+    return new Response(
+      // cria e retorna um readable stream
+      new ReadableStream({
+        start(controller) {
+          const reader = response.body.getReader();
+          read();
+          function read() {
+            reader.read().then(({done, value}) => {
+              if (done) {
+                controller.close();
+                return;
+              }
+              loaded += value.byteLength;
+              progress({loaded, total})
+              controller.enqueue(value);
+              read();
+            }).catch(error => {
+              console.error(error);
+              controller.error(error)
+            })
+          }
+        }
+      })
+    );
+  })
+  .then(response =>
+    // construa um blob a partir da data
+    response.blob()
+  )
+  .then(data => {
+    // insira a imagem carregada na página
+    document.getElementById('img').src = URL.createObjectURL(data);
+  })
+  .catch(error => {
+    console.error(error);
+  })
+function progress({loaded, total}) {
+  element.innerHTML = Math.round(loaded/total*100)+'%';
+}
+</script>
+```
+
+Implementar uma barra de progresso, ou algo similar usando o Axios é mais simples, especialmente se você usar o [Axios Progress Bar](https://github.com/rikmms/progress-bar-4-axios/). Antes de mais nada, você precisa incluir esses carinhas daqui de baixo:
+
+```html
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/rikmms/progress-bar-4-axios/0a3acf92/dist/nprogress.css" />
+<script src="https://cdn.rawgit.com/rikmms/progress-bar-4-axios/0a3acf92/dist/index.js"></script>
+```
+
+Aí você pode começar a implementar a barra de progresso, como visto abaixo:
+
+```html
+<img id="img">
+<script>
+loadProgressBar();
+const url = 'https://fetch-progress.anthum.com/30kbps/images/sunrise-baseline.jpg';
+function downloadFile(url) {
+  axios.get(url, {responseType: 'blob'})
+    .then(response => {
+      const reader = new window.FileReader();
+      reader.readAsDataURL(response.data);
+      reader.onload = () => {
+        document.getElementById('img').setAttribute('src', reader.result);
+      }
+    })
+    .catch(error => {
+      console.log(error)
+    });
+}
+downloadFile(url);
+</script>
+```
+
+Esse código faz uso da API `FileReader`, que de forma assíncrona lerá o arquivo a imagem baixada. O método `readAsDataURL` retorna a imagem com o encode Base64, que será inserida no atributo `src` da tag `img` para exibi-lá.
+
+# Requests simultâneas
+
+To make multiple simultaneous requests, Axios provides the `axios.all()` method. Simply pass an array of requests to this method, then use `axios.spread()` to assign the properties of the response array to separate variables:
+
+```javascript
+axios.all([
+  axios.get('https://api.github.com/users/iliakan'),
+  axios.get('https://api.github.com/users/taylorotwell')
+])
+.then(axios.spread((obj1, obj2) => {
+  // Ambas requests foram finalizadas
+  console.log(obj1.data.login + ' has ' + obj1.data.public_repos + ' public repos on GitHub');
+  console.log(obj2.data.login + ' has ' + obj2.data.public_repos + ' public repos on GitHub');
+}));
+```
+
+Você consegue o mesmo resultado fazendo uso do método `Promise.all()`. Para isso, é só você passar suas requests dentro de um array pra `Promise.all()`, e em seguida, lide com a resposta com uma funçao assíncrona, como o exemplo abaixo:
+
+```javascript
+Promise.all([
+  fetch('https://api.github.com/users/iliakan'),
+  fetch('https://api.github.com/users/taylorotwell')
+])
+.then(async([res1, res2]) => { //async function
+  const a = await res1.json();
+  const b = await res2.json();
+  console.log(a.login + ' has ' + a.public_repos + ' public repos on GitHub');
+  console.log(b.login + ' has ' + b.public_repos + ' public repos on GitHub');
+})
+.catch(error => {
+  console.log(error);
+});
+```
+
+# Conclusão
+
+O Axios fornece uma API fácil de usar em um pacote compacto para a maioria das suas necessidades de comunicação HTTP.No entanto, se você preferir ficar com APIs nativas, nada o impede de implementar os recursos do Axios.
+
+O Axios fornece uma API bem fácil de usar através de um pacote compacto que você poderá usar para a maioria das suas necessidades de comunicação HTTP. Entretanto, se você preferir lidar com APIs nativas também será possível.
+
+Conforme discutido neste artigo, é perfeitamente possível reproduzir os principais recursos da biblioteca Axios usando o método fetch () fornecido pelos navegadores da web. Por fim, se vale a pena carregar uma API HTTP do cliente, depende se você se sente à vontade trabalhando com APIs internas.
+
+Conforme discutido neste artigo, é perfeitamente possível reproduzir os principais recursos do Axios através do método `fetch()`. Para finalizar, se vale ou não você fazer uso de uma lib para fazer requisições HTTP, depende unicamente de você, e se está à vontade trabalhando com APIs internas.
