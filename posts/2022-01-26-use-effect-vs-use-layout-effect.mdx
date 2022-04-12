@@ -1,57 +1,139 @@
 ---
-title: useEffect vs useLayoutEffect
-subtitle: Quando usar cada um?
-description: Ambas opções podem ser usadas para fazer a mesma coisa, mas eles têm casos de uso ligeiramente diferentes. Então, aqui estão algumas regras para você considerar ao decidir qual React Hook usar.
-hero_image: "/assets/uploads/cover/useeffect_vs_uselayouteffect.png"
-date: 2022-01-26 19:00:00
-author: Allan Ramos
+title: Olá mundo jan!
+subtitle: Subtítulo jan!
+description: Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.
+hero_image: "/assets/uploads/cover/light.png"
+date: 2020-01-01 12:16:25
+author: Eu mesmo
 category: 'Front-end'
 series: ''
-tags: ['react']
+tags: ['javascript']
 ---
 
-Esse artigo é uma tradução do artigo original [useEffect vs useLayoutEffect](https://kentcdodds.com/blog/useeffect-vs-uselayouteffect) criado por [Kent C. Dodds](https://kentcdodds.com/blog/useeffect-vs-uselayouteffect).
+import Alert from '../src/components/Alert'
+import Verse from '../src/components/Verse'
 
-Ambas opções podem ser usadas para fazer a mesma coisa, mas elas tem casos de uso ligeiramente diferentes. Então, aqui estão algumas regras para você considerar ao decidir qual [React Hook](https://reactjs.org/docs/hooks-intro.html) usar.
+Interessante á forma como Jesus é apresentadInteressante á forma como Jesus é apresentadInteressante á forma como Jesus é apresentadInteressante á forma como Jesus é apresentadInteressante á forma como Jesus é apresentadInteressante á forma como Jesus é apresentadInteressante á forma como Jesus é apresentadInteressante á forma como Jesus é apresentado em <Verse book="Mateus 2:1-3" text="igual com eles" verses={[{
+    number: 1,
+    text: 'Livro da geração de Jesus Cristo, filho de Davi, filho de Abraão.',
+  },
+  {
+    number: 2,
+    text: 'Abraão gerou a Isaque; e Isaque gerou a Jacó; e Jacó gerou a Judá e a seus irmãos;',
+  }]}/> Interessante á forma como Jesus é apresentadInteressante á forma como Jesus é apresentadInteressante á forma como Jesus é apresentadInteressante á forma como Jesus é apresentadInteressante á forma como Jesus é apresentadInteressante á forma como
 
-# useEffect
+<Alert
+  type="success"
+  message="Note: If the Tooltip is wrapping a functional component, ensure that the functional component accepts a ref using forwardRef."
+/>
 
-99% das vezes é esse que você precisará usar. Quando seus hooks são estáveis e você refatora as suas class components para hooks, aos poucos você irá mudar códigos de `componentDidMount`, `componentDidUpdate` e `componentWillUnmount` para `useEffect`.
+<Alert
+  type="error"
+  message="Note: If the Tooltip is wrapping a functional component, ensure that the functional component accepts a ref using forwardRef."
+/>
 
-O único problema dele é ser apenas executado após o React renderizar seu componente, garantindo que ele não bloqueie a renderização do navegador. Isso é diferente do comportamento de class components onde `componentDidMount` e `componentDidUpdate` rodam de forma síncrona após a renderização. É mais eficiente dessa maneira e na maioria das vezes é isso que você precisará.
+<Alert
+  type="warning"
+  message="Note: If the Tooltip is wrapping a functional component, ensure that the functional component accepts a ref using forwardRef."
+/>
 
-Entretanto, se o uso desse hook estiver mudando o DOM(via DOM node ref) **e** a mutação do DOM alterar a aparência do nó do DOM entre o momento que ele é renderizado e o momento que seu hook o altera, então você não deseja usar o `useEffect`. Você na verdade quer usar o `useLayoutEffect`. Caso contrário, o usuário poderá ver uma mudança rápida na interface quando suas mudanças do DOM forem realizadas. Essa é praticamente a única vez que você deseja evitar `useEffect` e usar `useLayoutEffect` em vez disso.
+<Alert
+  type="info"
+  message="Note: If the Tooltip is wrapping a functional component, ensure that the functional component accepts a ref using forwardRef."
+/>
 
-# useLayoutEffect
+<p>
+Antes de nos aprofundar em funcionalidades avançadas do Axios, vamos comparar sua syntax básica com o que é usado no `fetch()`. O exemplo a seguir mostra como fazer uma request POST usando Axios com cabeçalhos customizados(custom headers). O Axios converte automaticamente a resposta para JSON, para que você não precise fazer isso.
+</p>
 
-Executado de forma síncrona imediatamente após o React fazer todas as alterações no DOM. Pode ser útil se você precisar fazer medições DOM (como obter a posição de rolagem ou outros estilos para um elemento) e depois fazer alterações no DOM ou acionar uma nova renderização síncrona atualizando o estado.
+# Título 1
 
-No que diz respeito ao momento, ele funciona da mesma forma que `componentDidMount` e `componentDidUpdate`. Seu código é executado imediamente após o DOM ser atualizado, mas antes que o navegador tenha a chance de "renderizar" essas alterações (o usuário não vê as atualizações até que o navegador tenha re-renderizado).
-
-# Resumo
-
-- `useLayoutEffect`: Se você precisar alterar o DOM e/ou precisar realizar medições.
-
-- `useEffect`: Se você não precisa interagir com o DOM ou suas alterações no DOM não são observáveis (sério, na maioria das vezes você deve usar isso).
-
-# Um caso diferente
-
-Um caso onde você possa querer usar `useLayoutEffect` ao invés de `useEffect` é quando você está atualizando um valor(como `ref`) e você quer ter certeza de que está atualizado antes que qualquer outro código seja executado. Exemplo:
+Antes de nos aprofundar em funcionalidades avançadas do Axios, vamos comparar sua syntax básica com o que é usado no `fetch()`. O exemplo a seguir mostra como fazer uma request POST usando Axios com cabeçalhos customizados(custom headers). O Axios converte automaticamente a resposta para JSON, para que você não precise fazer isso.
 
 ```jsx
-const ref = React.useRef()
-React.useEffect(() => {
-  ref.current = 'valor qualquer'
-})
-
-// depois, em outro hook ou algo do tipo
-React.useLayoutEffect(() => {
-  console.log(ref.current) // <-- isso aqui loga o valor antigo pois é executado primeiro!
-})
+import React from 'react'
+import React from 'react'
 ```
 
-Em casos como esse, use `useLayoutEffect`.
+```javascript
+const harry = spell(`lumos`);
 
-# Conclusão
+const x = harry;
+```
 
-É tudo sobre padrões. O comportamento padrão é permitir que o navegador renderize novamente com base nas atualizações do DOM antes que o React execute seu código. Isso significa que seu código não bloqueará o navegador e o usuário verá as atualizações do DOM mais cedo. Portanto, fique com `useEffect` na maioria das vezes.
+Or something like:
+
+```html
+<div>Hello World</div>
+```
+
+Or maybe:
+
+```css
+.imperio {
+  color: blue;
+}
+```
+
+Undefined language:
+
+```yaml
+- test: 01
+  hi: number two
+```
+
+Or without any label:
+
+```
+test 123
+```
+
+Agora compare esse código com o que usaremos no `fetch()`, que produzirá o mesmo resultado:
+
+## Título 11
+
+Antes de nos aprofundar em funcionalidades avançadas do Axios, vamos comparar sua syntax básica com o que é usado no `fetch()`. O exemplo a seguir mostra como fazer uma request POST usando Axios com cabeçalhos customizados(custom headers). O Axios converte automaticamente a resposta para JSON, para que você não precise fazer isso.
+
+*This text will be italic*
+_This will also be italic_
+
+**This text will be bold**
+__This will also be bold__
+
+_You **can** combine them_
+
+As Kanye West said:
+
+> *We're living the fut asdas das asd as das das dsa das dsa das das das dsa das dsa das das das das das das dsa das das ds das das dasour past. asdasadsa asd*<br/><br/>**Douglas Morti**
+
+# Título 2
+
+asdasdasdadasadasdas
+
+asdasdsa
+
+dadasadasdas
+
+asdasdsa
+
+dadasadasdas
+
+asdasdsa
+
+## Título 21
+
+dadasadasdas
+
+asdasdsa
+
+dadasadasdas
+
+asdasdsa
+
+dadasadasdas
+
+asdasdsa
+
+![Logo Gatsby](/assets/uploads/posts/button.png)
+
+asdasdasdadasadasdas

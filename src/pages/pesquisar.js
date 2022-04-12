@@ -9,6 +9,7 @@ import {
 const NotFoundPage = ({ data }) => (
   <Layout
     categoriesGroup={data.categoriesGroup}
+    siteMetaData={data.site.siteMetadata}
     tagsGroup={data.tagsGroup}
   >
     <Seo title="Pesquisar posts" />
@@ -20,6 +21,12 @@ const NotFoundPage = ({ data }) => (
 
 export const query = graphql`
   query SearchCategoriesList {
+    site {
+      siteMetadata {
+        title
+        description
+      }
+    }
     tagsGroup: allMdx(limit: 2000) {
       group(field: frontmatter___tags) {
         fieldValue
