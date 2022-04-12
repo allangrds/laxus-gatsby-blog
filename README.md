@@ -10,13 +10,19 @@ Gatsby starter for creating a blog
   npm install
 ```
 
-2.  **Start project on development mode**
+2.  **Change `gatsby-config.js` to config header and blog info**
+
+    2.1  Open `gatsby-config.js`
+
+    2.2  Change `siteMetadata` for your blog informations like blog name, author, description and url
+
+3.  **Start project on development mode**
 
 ```shell
   npm start
 ```
 
-3.  **Access your page**
+4.  **Access your page**
 
 ```
   http://localhost:8000/

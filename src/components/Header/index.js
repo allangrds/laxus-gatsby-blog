@@ -94,7 +94,7 @@ const makeLinks = (categoriesGroup, tagsGroup) => {
   return finalLinks
 }
 
-const Header = ({ categoriesGroup, tagsGroup }) => {
+const Header = ({ categoriesGroup, siteMetaData, tagsGroup }) => {
   const [isOpen, setIsOpen] = useState(false)
   const links = makeLinks(categoriesGroup, tagsGroup)
 
@@ -106,7 +106,10 @@ const Header = ({ categoriesGroup, tagsGroup }) => {
     <S.Header>
       <WaveBackground fill={Colors.GRAY_4} width="100%" />
       <S.Container>
-        <Logo />
+        <Logo
+          title={siteMetaData.title}
+          description={siteMetaData.description}
+        />
         <S.Navigation isOpen={isOpen}>
           <S.List>
             {
@@ -159,6 +162,7 @@ Header.propTypes = {
       fieldValue: PropTypes.string,
     })),
   }).isRequired,
+  siteMetaData: PropTypes.shape({}).isRequired,
   tagsGroup: PropTypes.shape({
     group: PropTypes.arrayOf(PropTypes.shape({
       fieldValue: PropTypes.string,

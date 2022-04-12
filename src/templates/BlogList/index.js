@@ -8,7 +8,9 @@ import {
 import * as S from './styles'
 
 const BlogList = ({ data, pageContext }) => {
-  const { allMdx, categoriesGroup, tagsGroup } = data
+  const {
+    allMdx, categoriesGroup, site, tagsGroup,
+  } = data
   const posts = allMdx.edges
 
   const {
@@ -25,7 +27,11 @@ const BlogList = ({ data, pageContext }) => {
   const normalPosts = posts.slice(1, posts.length)
 
   return (
-    <Layout categoriesGroup={categoriesGroup} tagsGroup={tagsGroup}>
+    <Layout
+      categoriesGroup={categoriesGroup}
+      tagsGroup={tagsGroup}
+      siteMetaData={site.siteMetadata}
+    >
       <Seo title="Home" />
       <Container>
         <FeaturedPost
@@ -92,6 +98,12 @@ const BlogList = ({ data, pageContext }) => {
 
 export const query = graphql`
   query PostList($skip: Int!, $limit: Int!) {
+    site {
+      siteMetadata {
+        title
+        description
+      }
+    }
     tagsGroup: allMdx(limit: 2000) {
       group(field: frontmatter___tags) {
         fieldValue
