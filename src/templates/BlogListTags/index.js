@@ -8,12 +8,18 @@ import {
 import * as S from './styles'
 
 const BlogListCategory = ({ data, pageContext }) => {
-  const { allMdx, categoriesGroup, tagsGroup } = data
+  const {
+    allMdx, categoriesGroup, site, tagsGroup,
+  } = data
   const posts = allMdx.edges
   const { tag } = pageContext
 
   return (
-    <Layout categoriesGroup={categoriesGroup} tagsGroup={tagsGroup}>
+    <Layout
+      categoriesGroup={categoriesGroup}
+      tagsGroup={tagsGroup}
+      siteMetaData={site.siteMetadata}
+    >
       <Seo title="Home" />
       <Container>
         {
@@ -64,6 +70,12 @@ const BlogListCategory = ({ data, pageContext }) => {
 
 export const query = graphql`
   query PostListTags($tag: String) {
+    site {
+      siteMetadata {
+        title
+        description
+      }
+    }
     tagsGroup: allMdx(limit: 2000) {
       group(field: frontmatter___tags) {
         fieldValue

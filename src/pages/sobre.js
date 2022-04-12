@@ -27,10 +27,14 @@ const S = {
 }
 
 const About = ({ data }) => {
-  const { categoriesGroup, tagsGroup } = data
+  const { categoriesGroup, site, tagsGroup } = data
 
   return (
-    <Layout categoriesGroup={categoriesGroup} tagsGroup={tagsGroup}>
+    <Layout
+      categoriesGroup={categoriesGroup}
+      tagsGroup={tagsGroup}
+      siteMetaData={site.siteMetadata}
+    >
       <Seo title="Sobre" />
       <Container>
         <S.Title>
@@ -78,6 +82,12 @@ const About = ({ data }) => {
 
 export const query = graphql`
   query AboutList {
+    site {
+      siteMetadata {
+        title
+        description
+      }
+    }
     tagsGroup: allMdx(limit: 2000) {
       group(field: frontmatter___tags) {
         fieldValue

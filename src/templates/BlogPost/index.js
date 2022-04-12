@@ -24,7 +24,9 @@ const components = {
 }
 
 const BlogPost = ({ data, location }) => {
-  const { categoriesGroup, mdx, tagsGroup } = data
+  const {
+    categoriesGroup, mdx, site, tagsGroup,
+  } = data
   const post = mdx
   const [fixedToc, setFixedToc] = useState(false)
 
@@ -54,6 +56,7 @@ const BlogPost = ({ data, location }) => {
     <Layout
       categoriesGroup={categoriesGroup}
       tagsGroup={tagsGroup}
+      siteMetaData={site.siteMetadata}
     >
       <Seo
         title={seoTitle}
@@ -100,6 +103,12 @@ const BlogPost = ({ data, location }) => {
 
 export const query = graphql`
   query Post($slug: String!) {
+    site {
+      siteMetadata {
+        title
+        description
+      }
+    }
     tagsGroup: allMdx(limit: 2000) {
       group(field: frontmatter___tags) {
         fieldValue
