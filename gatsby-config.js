@@ -176,9 +176,9 @@ module.exports = {
     }
   ],
   siteMetadata: {
-    author: '@allanramos',
-    description: 'Aprendendo e compartilhando tecnologia',
-    siteUrl: 'https://allanramos.com.br',
-    title: 'Allan Ramos',
+    author: '<author>',
+    description: '<blog_description>',
+    siteUrl: 'https://www.gatsbyjs.com/',
+    title: '<blog_title>',
   },
 }

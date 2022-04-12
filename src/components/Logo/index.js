@@ -1,14 +1,22 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import * as S from './styles'
 
-const Logo = () => (
+const Logo = ({ description, title }) => (
   <S.Container>
     <S.Title>
-      Allan Ramos
+      { title }
     </S.Title>
-    <S.Subtitle>Aprendendo e compartilhando tecnologia</S.Subtitle>
+    <S.Subtitle>
+      { description }
+    </S.Subtitle>
   </S.Container>
 )
+
+Logo.propTypes = {
+  description: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+}
 
 export default Logo
