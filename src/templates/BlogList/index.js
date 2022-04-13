@@ -9,7 +9,7 @@ import * as S from './styles'
 
 const BlogList = ({ data, pageContext }) => {
   const {
-    allMdx, categoriesGroup, site, tagsGroup,
+    allMdx, categoriesGroup, seriesGroup, site, tagsGroup,
   } = data
   const posts = allMdx.edges
 
@@ -30,6 +30,7 @@ const BlogList = ({ data, pageContext }) => {
     <Layout
       categoriesGroup={categoriesGroup}
       tagsGroup={tagsGroup}
+      seriesGroup={seriesGroup}
       siteMetaData={site.siteMetadata}
     >
       <Seo title="Home" />
@@ -111,6 +112,11 @@ export const query = graphql`
     }
     categoriesGroup: allMdx(limit: 2000) {
       group(field: frontmatter___category) {
+        fieldValue
+      }
+    }
+    seriesGroup: allMdx(limit: 2000) {
+      group(field: frontmatter___series) {
         fieldValue
       }
     }

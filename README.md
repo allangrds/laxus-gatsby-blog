@@ -49,7 +49,7 @@ date: <year-month-day hour:minute:second>
 author: <author_name>
 category: <front-end|back-end|what_ever>
 category: ['js', 'react', 'gatsby', 'redux']
-series: how to do x
+series: 'cool-series-max-width'
 ---
 ```
 

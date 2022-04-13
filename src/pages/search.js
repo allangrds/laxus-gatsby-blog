@@ -10,6 +10,7 @@ const NotFoundPage = ({ data }) => (
   <Layout
     categoriesGroup={data.categoriesGroup}
     siteMetaData={data.site.siteMetadata}
+    seriesGroup={data.site.seriesGroup}
     tagsGroup={data.tagsGroup}
   >
     <Seo title="Pesquisar posts" />
@@ -34,6 +35,11 @@ export const query = graphql`
     }
     categoriesGroup: allMdx(limit: 2000) {
       group(field: frontmatter___category) {
+        fieldValue
+      }
+    }
+    seriesGroup: allMdx(limit: 2000) {
+      group(field: frontmatter___series) {
         fieldValue
       }
     }

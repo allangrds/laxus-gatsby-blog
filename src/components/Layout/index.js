@@ -5,12 +5,13 @@ import Header from '../Header'
 import './reset.css'
 
 const Layout = ({
-  categoriesGroup, children, siteMetaData, tagsGroup,
+  categoriesGroup, children, seriesGroup, siteMetaData, tagsGroup,
 }) => (
   <>
     <Header
       categoriesGroup={categoriesGroup}
       siteMetaData={siteMetaData}
+      seriesGroup={seriesGroup}
       tagsGroup={tagsGroup}
     />
     <main>
@@ -26,6 +27,7 @@ Layout.propTypes = {
     })),
   }).isRequired,
   children: PropTypes.node.isRequired,
+  seriesGroup: PropTypes.shape({}).isRequired,
   siteMetaData: PropTypes.shape({}).isRequired,
   tagsGroup: PropTypes.shape({
     group: PropTypes.arrayOf(PropTypes.shape({
