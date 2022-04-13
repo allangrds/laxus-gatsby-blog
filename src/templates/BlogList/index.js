@@ -46,7 +46,7 @@ const BlogList = ({ data, pageContext }) => {
           normalPosts.length > 0 && (
             <>
               <S.LastPublications>
-                Últimas publicações
+                Latest
               </S.LastPublications>
               {
                 normalPosts.map(

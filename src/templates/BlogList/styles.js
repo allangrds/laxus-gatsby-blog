@@ -10,5 +10,5 @@ export const LastPublications = styled.h1`
   font-weight: normal;
   letter-spacing: 0.2em;
   margin-bottom: 70px;
-  margin-top: 150px;
+  margin-top: 120px;
 `
