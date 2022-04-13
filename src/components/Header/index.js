@@ -37,6 +37,7 @@ const makeLinks = (categoriesGroup, tagsGroup, seriesGroup) => {
       to: `/tags/${tag.fieldValue}`,
     }))
     : []
+
   const series = (groupSeries && groupSeries[0].fieldValue.length > 0)
     ? groupSeries.map(serie => ({
       label: serie.fieldValue.replaceAll('-', ' '),
@@ -46,59 +47,42 @@ const makeLinks = (categoriesGroup, tagsGroup, seriesGroup) => {
 
   const hasCategories = categories && categories.length > 0
   const hasTags = tags && tags.length > 0
+  const hasSeries = series && series.length > 0
 
-  if (!hasCategories && !hasTags) {
-    const finalLinks = [
-      latestPosts,
-      search,
-      ...others,
-    ]
+  let finalLinks = [latestPosts]
 
-    return finalLinks
-  }
-
-  if (!hasTags) {
-    const finalLinks = [
-      latestPosts,
+  if (hasCategories) {
+    finalLinks = [
+      ...finalLinks,
       {
         children: categories,
         label: 'Categorias',
       },
-      search,
-      ...others,
     ]
-
-    return finalLinks
   }
 
-  if (!hasCategories) {
-    const finalLinks = [
-      latestPosts,
+  if (hasSeries) {
+    finalLinks = [
+      ...finalLinks,
+      {
+        children: series,
+        label: 'Series',
+      },
+    ]
+  }
+
+  if (hasTags) {
+    finalLinks = [
+      ...finalLinks,
       {
         children: tags,
         label: 'Tags',
       },
-      search,
-      ...others,
     ]
-
-    return finalLinks
   }
 
-  const finalLinks = [
-    latestPosts,
-    {
-      children: categories,
-      label: 'Categorias',
-    },
-    {
-      children: series,
-      label: 'Series',
-    },
-    {
-      children: tags,
-      label: 'Tags',
-    },
+  finalLinks = [
+    ...finalLinks,
     search,
     ...others,
   ]
