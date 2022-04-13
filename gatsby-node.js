@@ -112,7 +112,7 @@ exports.createPages = ({ actions, graphql }) => {
     const tagTemplate = path.resolve('./src/templates/BlogListTags/index.js')
     const tags = result.data.tagsGroup.group
 
-    return tags.forEach((tag) => {
+    tags.forEach((tag) => {
       createPage({
         component: tagTemplate,
         context: {
@@ -121,5 +121,29 @@ exports.createPages = ({ actions, graphql }) => {
         path: `/tags/${tag.fieldValue}`,
       })
     })
+
+    return graphql(`
+      {
+        seriesGroup: allMdx(limit: 2000) {
+          group(field: frontmatter___series) {
+            fieldValue
+          }
+        }
+      }
+    `)
   })
+    .then((result) => {
+      const seriesTemplate = path.resolve('./src/templates/BlogListSeries/index.js')
+      const series = result.data.seriesGroup.group
+
+      return series.forEach((serie) => {
+        createPage({
+          component: seriesTemplate,
+          context: {
+            serie: serie.fieldValue,
+          },
+          path: `/series/${serie.fieldValue}`,
+        })
+      })
+    })
 }

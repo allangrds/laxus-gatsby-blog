@@ -6,9 +6,11 @@ import Logo from '../Logo'
 import * as Colors from '../../assets/styles/colors'
 import * as S from './styles'
 
-const makeLinks = (categoriesGroup, tagsGroup) => {
+const makeLinks = (categoriesGroup, tagsGroup, seriesGroup) => {
   const { group: groupCategories } = categoriesGroup
   const { group: groupTags } = tagsGroup
+  const { group: groupSeries } = seriesGroup
+
   const latestPosts = {
     label: 'Latest',
     to: '/',
@@ -33,6 +35,12 @@ const makeLinks = (categoriesGroup, tagsGroup) => {
     ? groupTags.map(tag => ({
       label: tag.fieldValue,
       to: `/tags/${tag.fieldValue}`,
+    }))
+    : []
+  const series = (groupSeries && groupSeries[0].fieldValue.length > 0)
+    ? groupSeries.map(serie => ({
+      label: serie.fieldValue.replaceAll('-', ' '),
+      to: `/series/${serie.fieldValue}`,
     }))
     : []
 
@@ -84,6 +92,10 @@ const makeLinks = (categoriesGroup, tagsGroup) => {
       label: 'Categorias',
     },
     {
+      children: series,
+      label: 'Series',
+    },
+    {
       children: tags,
       label: 'Tags',
     },
@@ -94,9 +106,11 @@ const makeLinks = (categoriesGroup, tagsGroup) => {
   return finalLinks
 }
 
-const Header = ({ categoriesGroup, siteMetaData, tagsGroup }) => {
+const Header = ({
+  categoriesGroup, seriesGroup, siteMetaData, tagsGroup,
+}) => {
   const [isOpen, setIsOpen] = useState(false)
-  const links = makeLinks(categoriesGroup, tagsGroup)
+  const links = makeLinks(categoriesGroup, tagsGroup, seriesGroup)
 
   function handleToggle () {
     setIsOpen(!isOpen)
@@ -162,6 +176,7 @@ Header.propTypes = {
       fieldValue: PropTypes.string,
     })),
   }).isRequired,
+  seriesGroup: PropTypes.shape({}).isRequired,
   siteMetaData: PropTypes.shape({}).isRequired,
   tagsGroup: PropTypes.shape({
     group: PropTypes.arrayOf(PropTypes.shape({
