@@ -85,7 +85,7 @@ export const PostContent = styled.div`
   ul,
   li,
   pre > code{
-    font-size: 1rem;
+    font-size: 1.1rem;
     line-height: 2;
   }
 

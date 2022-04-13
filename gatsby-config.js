@@ -169,7 +169,7 @@ module.exports = {
       resolve: `gatsby-plugin-google-fonts`,
       options: {
         fonts: [
-          `Rubik\:300,400,500,600`,
+          `Inter\:300,400,500,600`,
         ],
         display: 'swap'
       }
