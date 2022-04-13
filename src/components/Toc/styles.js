@@ -1,23 +1,17 @@
 import styled from 'styled-components'
 
 import * as Colors from '../../assets/styles/colors'
-import * as Widths from '../../assets/styles/widths'
 
-export const Toc = styled.nav`
-  position: relative;
-
-  @media(max-width: ${Widths.MOBILE_WIDTH}) {
-    display: none;
-  }
+export const Toc = styled.aside`
+  position: relative
 `
 
-export const Container = styled.div`
-  position: ${props => props.fixedPosition && 'fixed'};
+export const Container = styled.nav`
+  position: ${props => props.fixedPosition && 'sticky'};
   top: ${props => props.fixedPosition && '14px'};
-  width: ${props => props.fixedPosition && '20%'};
 `
 
-export const InnerScroll = styled.nav`
+export const InnerScroll = styled.div`
   display: block;
   overflow: auto;
   max-height: 500px;

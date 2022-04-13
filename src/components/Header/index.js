@@ -125,7 +125,7 @@ const Header = ({ categoriesGroup, siteMetaData, tagsGroup }) => {
                     {
                       children && (
                         <S.CardWrapper>
-                          <S.Card>
+                          <S.Card isSingle={children.length}>
                             {
                               children.map(child => (
                                 <S.SimpleLink
