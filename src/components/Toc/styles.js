@@ -18,12 +18,14 @@ export const InnerScroll = styled.div`
 `
 
 export const Title = styled.h1`
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: normal;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.1rem;
   margin-bottom: 20px;
   margin-top: 0;
+  font-weight: 500;
+  f
 `
 
 const leftMargins = {

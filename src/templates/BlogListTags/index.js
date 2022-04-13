@@ -26,7 +26,7 @@ const BlogListCategory = ({ data, pageContext }) => {
           posts.length > 0 && (
             <>
               <S.LastPublications>
-                Postagens sobre {tag}
+                Posts about {tag}
               </S.LastPublications>
               {
                 posts.map(
@@ -97,7 +97,7 @@ export const query = graphql`
             slug
           }
           frontmatter {
-            date(locale: "pt-br", formatString: "DD [de] MMMM [de] YYYY")
+            date(formatString: "MMMM, DD, YYYY")
             description
             title
             subtitle

@@ -23,7 +23,7 @@ const Toc = ({ fixedPosition, headings }) => {
     <S.Toc>
       <S.Container fixedPosition={fixedPosition}>
         <S.Title>
-          Sumário
+          Table of contents
         </S.Title>
         <S.InnerScroll>
           {
