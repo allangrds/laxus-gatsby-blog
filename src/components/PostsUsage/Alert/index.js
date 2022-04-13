@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import * as Colors from '../../assets/styles/colors'
+import * as Colors from '../../../assets/styles/colors'
 import * as S from './styles'
 
 const types = {

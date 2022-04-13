@@ -123,4 +123,10 @@ export const PostContent = styled.div`
     background-repeat: no-repeat;
     background-size: contain;
   }
+
+  i,
+  em {
+    background-color: ${Colors.ITALIC_COLOR};
+    padding: 5px 8px;
+  }
 `

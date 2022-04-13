@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Alert from '../components/Alert'
+import Alert from '../components/PostsUsage/Alert'
 
 export default {
   component: Alert,

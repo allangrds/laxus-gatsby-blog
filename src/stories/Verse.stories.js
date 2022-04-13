@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Verse from '../components/Verse'
+import Verse from '../components/PostsUsage/Verse'
 
 export default {
   component: Verse,

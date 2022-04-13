@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import * as Colors from '../../assets/styles/colors'
+import * as Colors from '../../../assets/styles/colors'
 
 export const Paragraph = styled.span`
   cursor: pointer;

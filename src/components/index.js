@@ -1,4 +1,3 @@
-import Alert from './Alert'
 import CodeBlock from './CodeBlock'
 import Comments from './Comments'
 import Container from './Container'
@@ -15,10 +14,8 @@ import Search from './Search'
 import Seo from './Seo'
 import ShareButtons from './ShareButtons'
 import Toc from './Toc'
-import Verse from './Verse'
 
 export {
-  Alert,
   CodeBlock,
   Comments,
   Container,
@@ -35,5 +32,4 @@ export {
   Seo,
   ShareButtons,
   Toc,
-  Verse,
 }
