@@ -28,7 +28,7 @@ Gatsby starter for creating a blog
   http://localhost:8000/
 ```
 
-## 📝 Como criar um post
+## 📝 Creating a post
 
 1.  **How to create a post**
 

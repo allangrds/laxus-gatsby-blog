@@ -1,35 +1,31 @@
 import styled from 'styled-components'
 
 import * as Colors from '../../assets/styles/colors'
-import * as Widths from '../../assets/styles/widths'
 
-export const Toc = styled.nav`
-  position: relative;
-
-  @media(max-width: ${Widths.MOBILE_WIDTH}) {
-    display: none;
-  }
+export const Toc = styled.aside`
+  position: relative
 `
 
-export const Container = styled.div`
-  position: ${props => props.fixedPosition && 'fixed'};
+export const Container = styled.nav`
+  position: ${props => props.fixedPosition && 'sticky'};
   top: ${props => props.fixedPosition && '14px'};
-  width: ${props => props.fixedPosition && '20%'};
 `
 
-export const InnerScroll = styled.nav`
+export const InnerScroll = styled.div`
   display: block;
   overflow: auto;
   max-height: 500px;
 `
 
 export const Title = styled.h1`
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: normal;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.1rem;
   margin-bottom: 20px;
   margin-top: 0;
+  font-weight: 500;
+  f
 `
 
 const leftMargins = {

@@ -60,10 +60,10 @@ export const Subtitle = styled.h2`
 `
 
 export const Description = styled.p`
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   margin-top: 20px;
   margin-bottom: 0;
-  line-height: 2;
+  line-height: 1.8;
 `
 
 export const ReadMore = styled.span`

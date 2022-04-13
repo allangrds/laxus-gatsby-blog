@@ -9,17 +9,17 @@ import * as S from './styles'
 const makeLinks = (categoriesGroup, tagsGroup) => {
   const { group: groupCategories } = categoriesGroup
   const { group: groupTags } = tagsGroup
-  const lastPosts = {
-    label: 'Últimas publicações',
+  const latestPosts = {
+    label: 'Latest',
     to: '/',
   }
   const search = {
-    label: 'Pesquisar',
-    to: '/pesquisar',
+    label: 'Search',
+    to: '/search',
   }
   const others = [{
-    label: 'Sobre',
-    to: '/sobre',
+    label: 'About',
+    to: '/about',
   }]
   const categories = (
     groupCategories && groupCategories[0].fieldValue.length > 0
@@ -41,7 +41,7 @@ const makeLinks = (categoriesGroup, tagsGroup) => {
 
   if (!hasCategories && !hasTags) {
     const finalLinks = [
-      lastPosts,
+      latestPosts,
       search,
       ...others,
     ]
@@ -51,7 +51,7 @@ const makeLinks = (categoriesGroup, tagsGroup) => {
 
   if (!hasTags) {
     const finalLinks = [
-      lastPosts,
+      latestPosts,
       {
         children: categories,
         label: 'Categorias',
@@ -65,7 +65,7 @@ const makeLinks = (categoriesGroup, tagsGroup) => {
 
   if (!hasCategories) {
     const finalLinks = [
-      lastPosts,
+      latestPosts,
       {
         children: tags,
         label: 'Tags',
@@ -78,7 +78,7 @@ const makeLinks = (categoriesGroup, tagsGroup) => {
   }
 
   const finalLinks = [
-    lastPosts,
+    latestPosts,
     {
       children: categories,
       label: 'Categorias',
@@ -125,7 +125,7 @@ const Header = ({ categoriesGroup, siteMetaData, tagsGroup }) => {
                     {
                       children && (
                         <S.CardWrapper>
-                          <S.Card>
+                          <S.Card isSingle={children.length}>
                             {
                               children.map(child => (
                                 <S.SimpleLink
