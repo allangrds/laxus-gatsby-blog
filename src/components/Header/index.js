@@ -123,7 +123,7 @@ const Header = ({
                     {
                       children && (
                         <S.CardWrapper>
-                          <S.Card isSingle={children.length}>
+                          <S.Card isSingle={children.length <= 1}>
                             {
                               children.map(child => (
                                 <S.SimpleLink
