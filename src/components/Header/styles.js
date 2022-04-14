@@ -165,10 +165,10 @@ export const Navigation = styled.nav`
       position: absolute;
       top: 0;
       left: 0;
-      height: 100vh;
       padding-top: 18px;
-      background-color: rgba(255, 255, 255, 0.95);
+      background-color: rgba(255, 255, 255, 1);
       z-index: 10;
+      overflow: scroll;
     `}
   }
 `

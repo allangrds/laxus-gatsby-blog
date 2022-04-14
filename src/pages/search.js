@@ -6,22 +6,19 @@ import {
   Container, Layout, Seo, Search,
 } from '../components'
 
-const NotFoundPage = ({ data }) => {
-  console.log('data -> ', data)
-  return (
-    <Layout
-      categoriesGroup={data.categoriesGroup}
-      siteMetaData={data.site.siteMetadata}
-      seriesGroup={data.seriesGroup}
-      tagsGroup={data.tagsGroup}
-    >
-      <Seo title="Search posts" />
-      <Container>
-        <Search />
-      </Container>
-    </Layout>
-  )
-}
+const SearchPage = ({ data }) => (
+  <Layout
+    categoriesGroup={data.categoriesGroup}
+    siteMetaData={data.site.siteMetadata}
+    seriesGroup={data.seriesGroup}
+    tagsGroup={data.tagsGroup}
+  >
+    <Seo title="Search posts" />
+    <Container>
+      <Search />
+    </Container>
+  </Layout>
+)
 
 export const query = graphql`
   query SearchCategoriesList {
@@ -49,7 +46,7 @@ export const query = graphql`
   }
 `
 
-NotFoundPage.propTypes = {
+SearchPage.propTypes = {
   data: PropTypes.shape({
     categoriesGroup: PropTypes.shape({
       group: PropTypes.arrayOf(PropTypes.shape({
@@ -70,4 +67,4 @@ NotFoundPage.propTypes = {
   }).isRequired,
 }
 
-export default NotFoundPage
+export default SearchPage

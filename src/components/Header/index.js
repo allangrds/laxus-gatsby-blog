@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
+import '../../utils/helpers/replaceAll'
 import WaveBackground from '../../../static/assets/images/wave.svg'
 import Logo from '../Logo'
 import * as Colors from '../../assets/styles/colors'

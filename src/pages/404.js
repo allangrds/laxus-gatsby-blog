@@ -9,6 +9,8 @@ import {
 const NotFoundPage = ({ data }) => (
   <Layout
     categoriesGroup={data.categoriesGroup}
+    siteMetaData={data.site.siteMetadata}
+    seriesGroup={data.seriesGroup}
     tagsGroup={data.tagsGroup}
   >
     <Seo title="404" />
@@ -19,7 +21,13 @@ const NotFoundPage = ({ data }) => (
 )
 
 export const query = graphql`
-  query NotFoundCategoriesList {
+  query NotFoundQuery {
+    site {
+      siteMetadata {
+        title
+        description
+      }
+    }
     tagsGroup: allMdx(limit: 2000) {
       group(field: frontmatter___tags) {
         fieldValue
@@ -27,6 +35,11 @@ export const query = graphql`
     }
     categoriesGroup: allMdx(limit: 2000) {
       group(field: frontmatter___category) {
+        fieldValue
+      }
+    }
+    seriesGroup: allMdx(limit: 2000) {
+      group(field: frontmatter___series) {
         fieldValue
       }
     }
@@ -40,6 +53,12 @@ NotFoundPage.propTypes = {
         fieldValue: PropTypes.string,
       })),
     }).isRequired,
+    seriesGroup: PropTypes.shape({
+      group: PropTypes.arrayOf(PropTypes.shape({
+        fieldValue: PropTypes.string,
+      })),
+    }).isRequired,
+    site: PropTypes.shape({}).isRequired,
     tagsGroup: PropTypes.shape({
       group: PropTypes.arrayOf(PropTypes.shape({
         fieldValue: PropTypes.string,

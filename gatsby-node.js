@@ -1,5 +1,6 @@
 const path = require('path')
 
+require('./src/utils/helpers/replaceAll')
 const { createFilePath } = require('gatsby-source-filesystem')
 
 exports.onCreateNode = ({ actions, getNode, node }) => {

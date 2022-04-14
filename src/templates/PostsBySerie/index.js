@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
 
+import '../../utils/helpers/replaceAll'
 import {
   Container, Layout, Post, Seo,
 } from '../../components'

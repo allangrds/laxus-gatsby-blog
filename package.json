@@ -1,6 +1,6 @@
 {
   "name": "allan-ramos-blog",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "description": "Allan Ramos Blog",
   "author": "Allan Ramos",
@@ -82,5 +82,8 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "volta": {
+    "node": "14.19.1"
   }
 }

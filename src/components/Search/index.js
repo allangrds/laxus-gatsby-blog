@@ -23,7 +23,7 @@ const Search = () => (
     >
       <SearchBox
         autoFocus
-        translations={{ placeholder: 'Pesquisar...' }}
+        translations={{ placeholder: 'Search...' }}
       />
       <Stats
         translations={{

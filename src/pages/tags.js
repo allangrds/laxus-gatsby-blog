@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { graphql } from 'gatsby'
 
+import '../utils/helpers/replaceAll'
 import * as Colors from '../assets/styles/colors'
 
 import {
