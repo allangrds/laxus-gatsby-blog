@@ -79,15 +79,3 @@ series: 'cool-series-max-width'
 ```
 
 ## Layout
-
-<img width="1383" alt="Captura de Tela 2022-04-13 às 14 11 12" src="https://user-images.githubusercontent.com/4103305/163234077-f82158b3-0a8f-4c8a-aa29-40c97744b23b.png">
-
-<img width="1338" alt="Captura de Tela 2022-04-13 às 14 11 21" src="https://user-images.githubusercontent.com/4103305/163234098-208c8f31-9b01-4215-9c8b-d5915b9c3ebc.png">
-
-<img width="1345" alt="Captura de Tela 2022-04-13 às 14 11 31" src="https://user-images.githubusercontent.com/4103305/163234121-c0a05925-d898-416f-a4f3-7e1c5b593b29.png">
-
-<img width="1358" alt="Captura de Tela 2022-04-13 às 14 11 45" src="https://user-images.githubusercontent.com/4103305/163234164-a443bf1b-b4f7-40f4-b331-4e0cb6f9a426.png">
-
-<img width="1330" alt="Captura de Tela 2022-04-13 às 14 11 55" src="https://user-images.githubusercontent.com/4103305/163234185-23c1be1f-d47a-48a9-81d0-42ff2ee46d8c.png">
-
-<img width="1340" alt="Captura de Tela 2022-04-13 às 14 12 08" src="https://user-images.githubusercontent.com/4103305/163234218-cb0ad7d1-a754-4a3e-a332-71c07eb4451b.png">
