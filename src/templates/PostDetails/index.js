@@ -23,7 +23,7 @@ const components = {
   pre: CodeBlock,
 }
 
-const BlogPost = ({ data, location }) => {
+const PostDetails = ({ data, location }) => {
   const {
     categoriesGroup, mdx, seriesGroup, site, tagsGroup,
   } = data
@@ -152,11 +152,11 @@ export const query = graphql`
   }
 `
 
-BlogPost.propTypes = {
+PostDetails.propTypes = {
   data: PropTypes.shape().isRequired,
   location: PropTypes.shape({
     href: PropTypes.string.isRequired,
   }).isRequired,
 }
 
-export default BlogPost
+export default PostDetails

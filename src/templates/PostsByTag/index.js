@@ -7,27 +7,27 @@ import {
 } from '../../components'
 import * as S from './styles'
 
-const BlogListCategory = ({ data, pageContext }) => {
+const PostByTag = ({ data, pageContext }) => {
   const {
     allMdx, categoriesGroup, seriesGroup, site, tagsGroup,
   } = data
   const posts = allMdx.edges
-  const { category } = pageContext
+  const { tag } = pageContext
 
   return (
     <Layout
       categoriesGroup={categoriesGroup}
-      siteMetaData={site.siteMetadata}
       tagsGroup={tagsGroup}
       seriesGroup={seriesGroup}
+      siteMetaData={site.siteMetadata}
     >
-      <Seo title="Home" />
+      <Seo title={tag} />
       <Container>
         {
           posts.length > 0 && (
             <>
               <S.LastPublications>
-                Posts about {category}
+                Posts about {tag}
               </S.LastPublications>
               {
                 posts.map(
@@ -70,7 +70,7 @@ const BlogListCategory = ({ data, pageContext }) => {
 }
 
 export const query = graphql`
-  query PostListCategory($category: String) {
+  query PostListTags($tag: String) {
     site {
       siteMetadata {
         title
@@ -95,7 +95,7 @@ export const query = graphql`
     allMdx(
       limit: 2000
       sort: { fields: frontmatter___date, order: DESC }
-      filter: { frontmatter: { category: { eq: $category } } }
+      filter: { frontmatter: { tags: { eq: $tag } } }
     ) {
       edges {
         node {
@@ -122,13 +122,13 @@ export const query = graphql`
   }
 `
 
-BlogListCategory.propTypes = {
+PostByTag.propTypes = {
   data: PropTypes.shape().isRequired,
   pageContext: PropTypes.shape({
-    category: PropTypes.string.isRequired,
     currentPage: PropTypes.string.isRequired,
     numPages: PropTypes.string.isRequired,
+    tag: PropTypes.string.isRequired,
   }).isRequired,
 }
 
-export default BlogListCategory
+export default PostByTag

@@ -7,27 +7,28 @@ import {
 } from '../../components'
 import * as S from './styles'
 
-const BlogListCategory = ({ data, pageContext }) => {
+const PostsBySerie = ({ data, pageContext }) => {
   const {
     allMdx, categoriesGroup, seriesGroup, site, tagsGroup,
   } = data
   const posts = allMdx.edges
-  const { tag } = pageContext
+  const { serie } = pageContext
+  const formatedSerieName = serie.replaceAll('-', ' ')
 
   return (
     <Layout
       categoriesGroup={categoriesGroup}
+      siteMetaData={site.siteMetadata}
       tagsGroup={tagsGroup}
       seriesGroup={seriesGroup}
-      siteMetaData={site.siteMetadata}
     >
-      <Seo title="Home" />
+      <Seo title={formatedSerieName} />
       <Container>
         {
           posts.length > 0 && (
             <>
               <S.LastPublications>
-                Posts about {tag}
+                { formatedSerieName }
               </S.LastPublications>
               {
                 posts.map(
@@ -70,7 +71,7 @@ const BlogListCategory = ({ data, pageContext }) => {
 }
 
 export const query = graphql`
-  query PostListTags($tag: String) {
+  query PostListSerie($serie: String) {
     site {
       siteMetadata {
         title
@@ -95,7 +96,7 @@ export const query = graphql`
     allMdx(
       limit: 2000
       sort: { fields: frontmatter___date, order: DESC }
-      filter: { frontmatter: { tags: { eq: $tag } } }
+      filter: { frontmatter: { series: { eq: $serie } } }
     ) {
       edges {
         node {
@@ -122,13 +123,13 @@ export const query = graphql`
   }
 `
 
-BlogListCategory.propTypes = {
+PostsBySerie.propTypes = {
   data: PropTypes.shape().isRequired,
   pageContext: PropTypes.shape({
     currentPage: PropTypes.string.isRequired,
     numPages: PropTypes.string.isRequired,
-    tag: PropTypes.string.isRequired,
+    serie: PropTypes.string.isRequired,
   }).isRequired,
 }
 
-export default BlogListCategory
+export default PostsBySerie

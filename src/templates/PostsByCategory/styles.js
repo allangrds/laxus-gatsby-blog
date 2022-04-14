@@ -8,6 +8,5 @@ export const LastPublications = styled.h1`
   text-transform: uppercase;
   font-size: 1.38rem;
   font-weight: normal;
-  letter-spacing: 0.2rem;
   margin-bottom: 70px;
 `

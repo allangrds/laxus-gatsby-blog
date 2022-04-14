@@ -55,3 +55,5 @@ export const ABOUT_TEXT_COLOR = BLACK
 export const POST_CODE_COLOR = GRAY_2
 
 export const ITALIC_COLOR = GRAY_2
+
+export const LINK_COLOR = BLACK

@@ -7,7 +7,7 @@ import {
 } from '../../components'
 import * as S from './styles'
 
-const BlogList = ({ data, pageContext }) => {
+const PostsListing = ({ data, pageContext }) => {
   const {
     allMdx, categoriesGroup, seriesGroup, site, tagsGroup,
   } = data
@@ -150,7 +150,7 @@ export const query = graphql`
   }
 `
 
-BlogList.propTypes = {
+PostsListing.propTypes = {
   data: PropTypes.shape().isRequired,
   pageContext: PropTypes.shape({
     currentPage: PropTypes.string.isRequired,
@@ -158,4 +158,4 @@ BlogList.propTypes = {
   }).isRequired,
 }
 
-export default BlogList
+export default PostsListing

@@ -28,20 +28,20 @@ const makeLinks = (categoriesGroup, tagsGroup, seriesGroup) => {
   )
     ? groupCategories.map(postType => ({
       label: postType.fieldValue,
-      to: `/categorias/${postType.fieldValue}`,
+      to: `/categories/${postType.fieldValue.toLowerCase().replaceAll(' ', '-')}`,
     }))
     : []
   const tags = (groupTags && groupTags[0].fieldValue.length > 0)
     ? groupTags.map(tag => ({
       label: tag.fieldValue,
-      to: `/tags/${tag.fieldValue}`,
+      to: `/tags/${tag.fieldValue.toLowerCase().replaceAll(' ', '-')}`,
     }))
     : []
 
   const series = (groupSeries && groupSeries[0].fieldValue.length > 0)
     ? groupSeries.map(serie => ({
       label: serie.fieldValue.replaceAll('-', ' '),
-      to: `/series/${serie.fieldValue}`,
+      to: `/series/${serie.fieldValue.toLowerCase().replaceAll(' ', '-')}`,
     }))
     : []
 
@@ -52,30 +52,57 @@ const makeLinks = (categoriesGroup, tagsGroup, seriesGroup) => {
   let finalLinks = [latestPosts]
 
   if (hasCategories) {
+    const othersCategories = {
+      label: 'Others',
+      to: '/categories',
+    }
+    const categoriesSize = categories ? categories.length : 0
+    const formatedCatories = categoriesSize > 3
+      ? [...categories.slice(0, 3), othersCategories]
+      : categories
+
     finalLinks = [
       ...finalLinks,
       {
-        children: categories,
-        label: 'Categorias',
+        children: formatedCatories,
+        label: 'Categories',
       },
     ]
   }
 
   if (hasSeries) {
+    const othersSeries = {
+      label: 'Others',
+      to: '/series',
+    }
+    const seriesSize = series ? series.length : 0
+    const formatedSeries = seriesSize > 3
+      ? [...series.slice(0, 3), othersSeries]
+      : series
+
     finalLinks = [
       ...finalLinks,
       {
-        children: series,
+        children: formatedSeries,
         label: 'Series',
       },
     ]
   }
 
   if (hasTags) {
+    const othersTags = {
+      label: 'Others',
+      to: '/tags',
+    }
+    const tagsSize = tags ? tags.length : 0
+    const formatedTags = tagsSize > 3
+      ? [...tags.slice(0, 3), othersTags]
+      : tags
+
     finalLinks = [
       ...finalLinks,
       {
-        children: tags,
+        children: formatedTags,
         label: 'Tags',
       },
     ]
