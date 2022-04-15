@@ -2,7 +2,19 @@
 
 Gatsby starter for creating a blog
 
-## 🚀 Installing and running the project
+## Sumary
+
+- [Requirements](#requirements)
+- [Installing](#installing)
+- [Running](#running)
+- [Writing](#writing)
+- [Scheduling](#scheduling)
+
+## Requirements
+
+- Node v14.19.1
+
+## Installing
 
 1.  **Dependencies install**
 
@@ -16,24 +28,30 @@ Gatsby starter for creating a blog
 
     2.2  Change `siteMetadata` for your blog informations like blog name, author, description and url
 
-3.  **Start project on development mode**
+### How to change date format to pt-BR
+
+1. Override all `date(formatString: "MMMM, DD, YYYY")` to `date(locale: "pt-br", formatString: "DD [de] MMMM [de] YYYY")`
+
+## Running
+
+1.  **Start project on development mode**
 
 ```shell
   npm start
 ```
 
-4.  **Access your page**
+2.  **Access your page**
 
 ```
   http://localhost:8000/
 ```
 
-## 📝 Creating a post
+## Writing
 
 1.  **How to create a post**
 
 - The post file should be at `/posts`
-- The name format should be `year-month-day-post-name.md`
+- The name format should be `year-month-day-post-name.mdx`
 
 2.  **Insert the basic post informations**
 
@@ -42,12 +60,13 @@ Gatsby starter for creating a blog
 ```markdown
 
 ---
-title: <post_title>
-subtitle: <optional_subtitle>
-description: <post_description>
-date: <year-month-day hour:minute:second>
-author: <author_name>
-category: <front-end|back-end|what_ever>
+title: Hello world
+subtitle: Cool subtitle
+description: Coold description
+hero_image: "/assets/uploads/cover/light.png"
+date: 2022-03-10 10:05:00
+author: Author Name
+category: front-end
 category: ['js', 'react', 'gatsby', 'redux']
 series: 'cool-series-max-width'
 ---
@@ -70,12 +89,10 @@ series: 'cool-series-max-width'
   ![Gatsby Logo](/assets/uploads/light.jpeg)
 ```
 
-## 📝 Schedule a post
+## Scheduling
 
 1.  **In the description of the PR, put the date that the post should be merged following the example below:**
 
 ```
 /schedule 2020-09-02
 ```
-
-## Layout
