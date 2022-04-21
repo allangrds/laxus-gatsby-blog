@@ -1,9 +1,14 @@
 import styled from 'styled-components'
 
 import * as Colors from '../../assets/styles/colors'
+import * as Widths from '../../assets/styles/widths'
 
 export const Toc = styled.aside`
-  position: relative
+  position: relative;
+
+  @media(max-width: ${Widths.MOBILE_WIDTH}) {
+    display: none;
+  }
 `
 
 export const Container = styled.nav`
